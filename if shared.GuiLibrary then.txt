@@ -1,0 +1,601 @@
+if shared.GuiLibrary then
+    shared.GuiLibrary["SelfDestruct"]()
+end
+
+wait(0.5)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))()
+
+wait(0.5)
+
+repeat task.wait() until game:IsLoaded()
+repeat task.wait() until shared.GuiLibrary
+local uis = game:GetService("UserInputService")
+local GuiLibrary = shared.GuiLibrary
+local ScriptSettings = {}
+local UIS = game:GetService("UserInputService")
+local SMX = function(tab, argstable)
+	return GuiLibrary["ObjectsThatCanBeSaved"][tab.."Window"]["Api"].CreateOptionsButton(argstable)
+end
+function securefunc(func)
+	task.spawn(function()
+		spawn(function()
+			pcall(function()
+				loadstring(
+					func()
+				)()
+			end)
+		end)
+	end)
+end
+function warnnotify(title, content, duration)
+	local frame = GuiLibrary["CreateNotification"](title or "Allah Warning", content or "(No Content Given)", duration or 5, "assets/WarningNotification.png")
+	frame.Frame.Frame.ImageColor3 = Color3.fromRGB(0, 0, 255)
+end
+function infonotify(title, content, duration)
+	local frame = GuiLibrary["CreateNotification"](title or "Allah Info", content or "(No Content Given)", duration or 5, "assets/InfoNotification.png")
+	frame.Frame.Frame.ImageColor3 = Color3.fromRGB(0, 0, 255)
+end
+function getstate()
+	local ClientStoreHandler = require(game.Players.LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
+	return ClientStoreHandler:getState().Game.matchState
+end
+function iscustommatch()
+	local ClientStoreHandler = require(game.Players.LocalPlayer.PlayerScripts.TS.ui.store).ClientStore
+	return ClientStoreHandler:getState().Game.customMatch
+end
+function checklagback()
+	local hrp = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+	return isnetworkowner(hrp)
+end
+
+infonotify("Allah Private", "Allah Private Loaded Successfully!", 10)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SmokeXDev/SmokeXPubblic/main/BedwarsSmxDetector.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SmokeXDev/SmokeXPubblic/main/SmokeXTeam/NewDetect.lua", true))()
+
+GuiLibrary.RemoveObject("XrayOptionsButton")
+GuiLibrary.RemoveObject("SwimOptionsButton")
+
+local NoAnim = SMX("Render", {
+	["Name"] = "NoAnim",
+	["Function"] = function (callback)
+		if callback then
+			infonotify("NoAnim", "Enabled!", 5)
+			game:GetService("Players").LocalPlayer.Character.Animate.Disabled = true
+		else
+			game:GetService("Players").LocalPlayer.Character.Animate.Disabled = false
+			infonotify("NoAnim", "Disabled!", 5)
+		end
+	end
+})
+
+local mouse = game:GetService("Players").LocalPlayer:GetMouse()
+local Crosshair = SMX("Render", {
+    ["Name"] = "Crosshair",
+    ["Function"] = function(callback)
+        if callback then
+            infonotify("Crosshair", "Enabled!", 5)
+            mouse.Icon = "rbxassetid://9943168532"
+        else
+            infonotify("Crosshair", "Disabled!", 5)
+            mouse.Icon = ""
+        end
+    end
+})
+
+local NightVal = false
+local Night = SMX("Render", {
+	["Name"] = "Night",
+	["Function"] = function(callback)
+		if callback then
+				infonotify("Night", "Loaded!", 5)
+				NightVal = true
+				while NightVal and task.wait(0.3) do
+					game:GetService("Lighting").TimeOfDay = "00:00:00"
+				end
+			else
+				infonotify("Night", "Night Removed!", 5)
+				NightVal = false
+				wait(0.3)
+			game:GetService("Lighting").TimeOfDay = "13:00:00"
+		end
+	end
+})
+
+local DayVal = false
+local Day = SMX("Render", {
+	["Name"] = "Day",
+	["Function"] = function (callback)
+		if callback then
+			infonotify("Day", "Loaded!", 5)
+			DayVal = true
+			while DayVal and task.wait(0.3) do
+				game:GetService("Lighting").TimeOfDay = "07:00:00"
+			end
+		else
+			infonotify("Day", "Day Removed!", 5)
+			DayVal = false
+			wait(0.3)
+			game:GetService("Lighting").TimeOfDay = ""
+		end
+	end
+})
+
+local AntiVoidV2 = SMX("World", {
+    ["Name"] = "AntiVoidV2",
+    ["Function"] = function(callback)
+        if callback then
+            infonotify("AntiVoidV2", "Loaded!", 5)
+                ScriptSettings.AntiVoidV2 = true
+                local part = Instance.new("Part")
+                part.Name = "AntiVoidV2"
+                part.Anchored = true
+                part.Transparency = 1
+                part.Size = Vector3.new(5000,2,5000)
+                part.Parent = game:GetService("Workspace")
+                part.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame - Vector3.new(0,20,0)
+                ScriptSettings.AntiVoidV2 = part
+                part.Touched:Connect(function()
+                game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+                    task.wait(.20)
+                game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping")
+            end)
+        else
+			infonotify("AntiVoidV2", "Deleted Successfully!", 5)
+            ScriptSettings.AntiVoidV2 = false
+			workspace.AntiVoidV2:Destroy()
+        end
+    end
+})
+
+local AFKFarm = SMX("World", {
+	["Name"] = "AFKFarm",
+	["Function"] = function (callback)
+		if callback then
+			infonotify("AFKFarm", "Enabled!", "5")
+			local char = game:GetService("Players").LocalPlayer.Character
+			char:FindFirstChild("HumanoidRootPart").CFrame = char:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,99,0)
+			char:FindFirstChild("Head").Anchored = true
+			char:FindFirstChild("UpperTorso").Anchored = true
+			char:FindFirstChild("UpperTorso").Anchored = true
+		else
+			infonotify("AFKFarm", "Disabled!", "5")
+			local char = game:GetService("Players").LocalPlayer.Character
+			char:FindFirstChild("HumanoidRootPart").CFrame = char:FindFirstChild("HumanoidRootPart").CFrame + Vector3.new(0,99,0)
+			char:FindFirstChild("Head").Anchored = false
+			char:FindFirstChild("UpperTorso").Anchored = false
+			char:FindFirstChild("UpperTorso").Anchored = false
+		end
+	end
+})
+
+local ChatDisabler = SMX("Render", {
+	["Name"] = "ChatDisabler",
+	["Function"] = function(callback)
+		if callback then
+			local succ, err = pcall(function() game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.Chat, false) end)
+			if succ then
+				infonotify('ChatDisabler', "Chat disabled!", 5)
+			elseif err then
+				warnnotify('ChatDisabler', "Patched", 5)
+			end
+		else
+			local succ, err = pcall(function() game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.Chat, true) end)
+			if succ then
+				infonotify('ChatDisabler', "Chat enabled!", 5)
+			elseif err then
+				warnnotify('ChatDisabler', "Patched", 5)
+			end
+		end
+	end
+})
+
+local FlyBetaVal = false
+local FlyGrav = 3
+local FlySpeed = 23
+local FlyGravDefault = 192
+local FlySpeedDefault = 16
+local FlyBeta = SMX("Utility", {
+    ["Name"] = "FlyBeta",
+    ["Function"] = function(FlyFunc, DelayFlyVal)
+        if FlyFunc then
+            wait(DelayFlyVal)
+            FlyBetaVal = true
+            while FlyBetaVal do
+                workspace.Gravity = FlyGrav
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = FlySpeed
+                task.wait()
+            end
+        else
+            FlyBetaVal = false
+            workspace.Gravity = FlyGravDefault
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = FlySpeedDefault
+        end
+    end
+})
+FlyBeta.CreateSlider({
+    ["Name"] = "Delay",
+    ["Min"] = 0,
+    ["Max"] = 10,
+    ["Function"] = function(DelayFlyVal)
+    end,
+	["Default"] = 1
+})
+
+local ResetMethod = {Value = "InstaReset"}
+local ResetDelay = 0
+local ResetV2 = SMX("Utility", {
+    ["Name"] = "ResetV2",
+    ["Function"] = function ()
+        if ResetMethod.Value == "InstaReset" then
+            wait(ResetDelay)
+            game.Players.LocalPlayer.Character.Humanoid:TakeDamage(999999)
+        end
+
+        if ResetMethod.Value == "Lagback" then
+            wait(ResetDelay)
+			game.Players.LocalPlayer.Character.Humanoid.JumpPower = 500
+			game.Players.LocalPlayer.Character.Humanoid.Jump = true
+			wait(1)
+			game.Players.LocalPlayer.Character.Humanoid:TakeDamage(999999)
+        end
+
+		if ResetMethod.Value == "Cya" then
+			wait(ResetDelay)
+			game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Cya", "All")
+			game.Players.LocalPlayer.Character.Humanoid:TakeDamage(10000)
+		end
+
+		if ResetMethod.Value == "Fling" then
+			wait(ResetDelay)
+			game.Players.LocalPlayer.Character:MoveTo(Vector3.new(0,1000,0))
+			wait(1)
+			game.Players.LocalPlayer.Character.Humanoid:TakeDamage(999999)
+		end
+    end
+})
+ResetV2.CreateSlider({
+    ["Name"] = "Reset Delay",
+    ["Min"] = 0,
+    ["Max"] = 30,
+    ["Function"] = function (ResetDelayFunc)
+        ResetDelay = ResetDelayFunc
+    end,
+    ["Default"] = 0
+})
+ResetV2.CreateDropdown({
+    ["Name"] = "Method",
+    ["List"] = {"InstaReset", "Lagback", "Fling", "Cya"},
+    ["Function"] = function (ResetMethodFunc)
+        ResetMethod.Value = ResetMethodFunc
+    end
+})
+
+local BuyingVal = false
+local AutoWool = SMX("Utility", {
+	["Name"] = "AutoWool",
+	["Function"] = function (callback)
+		if callback then
+			infonotify("AutoWool", "Enabled", 5)
+			BuyingVal = true
+			while BuyingVal and task.wait() do
+		local args = {
+			[1] = {
+				["shopItem"] = {
+					["currency"] = "iron",
+					["itemType"] = "wool_white",
+					["amount"] = 16,
+					["price"] = 8,
+					["category"] = "Blocks"
+			}}}
+			game:GetService("ReplicatedStorage").rbxts_include.node_modules["@rbxts"].net.out._NetManaged.BedwarsPurchaseItem:InvokeServer(unpack(args))
+		end
+	else
+		BuyingVal = false
+			infonotify("AutoWool", "Disabled", 5)
+		end
+	end
+})
+
+local BetterSpeedVal = false
+local BetterSpeed = SMX("Utility", {
+	["Name"] = "BetterSpeed",
+	["Function"] = function (callback)
+		if callback then
+			BetterSpeedVal = true
+			while BetterSpeedVal and task.wait() do
+				game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 65
+				wait(0.2)
+				game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 10
+				wait(0.4)
+				game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
+				wait(0.2)
+				game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 10
+			end
+		else
+			infonotify("BetterSpeed", "Restoring your speed...")
+			BetterSpeedVal = false
+			wait(1)
+			game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 6
+		end
+	end
+})
+
+local LightingValue = 1
+local PermLight = false
+local Lighting = SMX("Render", {
+	["Name"] = "Lighting",
+	["Function"] = function (callback)
+		if callback then
+			PermLight = true
+			while PermLight and task.wait() do
+				game.Lighting.Brightness = LightingValue
+			end
+		else
+			PermLight = false
+			infonotify("Lighting", "Restoring normal lights...")
+			wait(1)
+			game.Lighting.Brightness = 2.5
+			infonotify("Lighting", "Light Restored!")
+		end
+	end
+})
+Lighting.CreateSlider({
+	["Name"] = "Value",
+	["Max"] = 100,
+	["Min"] = 0,
+	["Function"] = function (lightvalfunc)
+		LightingValue = lightvalfunc
+	end
+})
+
+local ZoomVal = 100
+local PermZoom = false
+local CameraZoom = SMX("Render", {
+	["Name"] = "CameraZoom",
+	["Function"] = function (callback)
+		if callback then
+			PermZoom = true
+			while PermZoom and task.wait() do
+				game.Players.LocalPlayer.CameraMaxZoomDistance = ZoomVal
+			end
+		else
+			PermZoom = false
+			game.Players.LocalPlayer.CameraMaxZoomDistance = 50
+		end
+	end
+})
+CameraZoom.CreateSlider({
+	["Name"] = "Max",
+	["Max"] = 5000,
+	["Min"] = 0,
+	["Function"] = function (zoomvaluefunc)
+		ZoomVal = zoomvaluefunc
+	end
+})
+
+local RainbowSkinVal = false
+local RainbowSkin = SMX("Render", {
+	["Name"] = "RainbowSkin",
+	["Function"] = function (callback)
+		if callback then
+			infonotify("RainbowSkin", "Enabled!", 5)
+			RainbowSkinVal = true
+			while RainbowSkinVal and task.wait() do
+				local player = game.Players.LocalPlayer
+				local character = player.Character or player.CharacterAdded:Wait()
+				for _,part in pairs(character:GetDescendants()) do
+				  if part:IsA("BasePart") then
+					part.Color = Color3.new(math.random(), math.random(), math.random())
+				  end
+				end
+			end
+		else
+			RainbowSkinVal = false
+			infonotify("RainbowSkin", "Disabled!", 5)
+		end
+	end
+})
+
+local InvisibleVal = false
+local Invisible = SMX("Render", {
+	["Name"] = "Invisible",
+	["Function"] = function (callback)
+		if callback then
+			InvisibleVal = true
+			while InvisibleVal and task.wait() do
+				for _,part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+    				if part:IsA("BasePart") then
+        				part.Transparency = 1
+    				end
+				end
+			end
+		else
+			InvisibleVal = false
+			for _,part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+				if part:IsA("BasePart") then
+					part.Transparency = 0
+				end
+			end
+		end
+	end
+})
+
+local Noclip = SMX("Utility", {
+	["Name"] = "Noclip",
+	["Function"] = function (callback)
+		if callback then
+			infonotify("Noclip", "BETA Feature", 5)
+			game:GetService("RunService").Stepped:connect(function()
+				for _,part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+					if part:IsA("BasePart") then
+						part.CanCollide = false
+					end
+				end
+			end)
+		else
+			infonotify("Noclip", "Disabled!", 5)
+			game:GetService("RunService").Stepped:connect(function()
+				for _,part in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+					if part:IsA("BasePart") then
+						part.CanCollide = true
+					end
+				end
+			end)
+		end
+	end
+})
+
+local SuperPanic = SMX("Utility", {
+	["Name"] = "SuperPanic",
+	["Function"] = function (callback)
+		if callback then
+			game.Players.LocalPlayer:Kick("You has been kicked from SuperPanic.")
+				wait()
+			game:Shutdown()
+		end
+	end
+})
+
+local LegitMode = SMX("World", {
+	["Name"] = "LegitMode",
+	["Function"] = function (callback)
+		if callback then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/SmokeXDev/SmokeXPubblic/main/GameLoader/BedwarsData.lua", true))()
+		end
+	end
+})
+
+local ErrorTimeVal = false
+local ErrorTime = SMX("Render", {
+	["Name"] = "ErrorTime",
+	["Function"] = function (callback)
+		if callback then
+			infonotify("ErrorTime", "Enabled!", 5)
+			ErrorTimeVal = true
+			while ErrorTimeVal and task.wait(0.1) do
+				game.Lighting.ClockTime = 1
+					wait(0.1)
+				game.Lighting.ClockTime = 13
+			end
+		else
+			infonotify("ErrorTime", "Disabled!", 5)
+			ErrorTimeVal = false
+		end
+	end
+})
+
+local MassReportChat = {Enabled = false}
+local AutoChatVal = false
+local MassReport = SMX("Blatant", {
+	["Name"] = "MassReport",
+	["Function"] = function ()
+		infonotify("MassReport", "Enabled!", 5)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/SmokeXDev/SmokeXPubblic/main/Resources/MassReport.lua", true))()
+	end,
+	["HoverText"] = "Can't be reversed"
+})
+MassReportChat = MassReport.CreateToggle({
+	["Name"] = "AutoChat",
+	["Function"] = function (callback)
+		if callback and MassReport.Enabled == true then
+			AutoChatVal = true
+			while AutoChatVal and task.wait(1) do
+				game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Server getting mass reported!", "All")
+					wait(2)
+				game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Reported Everyone Successfully", "All")
+			end
+		else
+			AutoChatVal = false
+		end
+	end
+})
+
+local GravityV2 = SMX("Utility", {
+    ["Name"] = "GravityV2",
+    ["Function"] = function (callback)
+    if callback then
+            workspace.Gravity = GravitiyVal
+        end
+    end,
+    ["Hovertext"] = "Change your gravity"
+})
+GravityV2.CreateSlider({
+    ["Name"] = "GravityV2",
+    ["Min"] = 0,
+    ["Max"] = 192.2,
+    ["Function"] = function (GravitiyVal)
+        if GravityV2.Enabled then
+            workspace.Gravity = GravitiyVal
+        end
+    end,
+    ["Default"] = 192.2
+})
+
+local SkyScytheVal = false
+local SkyScytheExploit = SMX("Blatant", {
+    ["Name"] = "SkyScytheExploit",
+    ["Function"] = function (callback)
+		if callback then
+			local success, err = pcall(function()
+				game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SkyScytheSpin"):FireServer()
+			end)
+			if success then
+				SkyScytheVal = true
+				while SkyScytheVal and task.wait() do
+					game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("SkyScytheSpin"):FireServer()
+				end
+			else
+				warnnotify("SkyScytheExploit", "Item not found 'sky_scythe'")
+			end
+		elseif not callback then
+			SkyScytheVal = false
+		end
+    end
+})
+
+local roles = {"Junior Moderator", "Moderator", "Anticheat Mod", "Anticheat Manager", "Senior Moderator", "Lead Moderator", "Community Manager", "Engineer", "Engineer (devops)", "Full", "Owner"}
+local groupid = game.CreatorId
+local plrservice = game:GetService("Players")
+local minrank = 55
+local checkrank = true
+function groupcheck(ranks, title, desc, time)
+	for i,v in pairs(plrservice:GetPlayers()) do
+		if v ~= plrservice.LocalPlayer then
+			for _,c in pairs(roles) do
+				if v:GetRoleInGroup(groupid) == roles[c] or v:GetRankInGroup(groupid) >= ranks then
+					warnnotify("Smoke", "A Staff is here! Be careful! [BETA] If you think this is an error contact https://dsc.gg/smokex", 20)
+					break
+				end
+			end
+		end
+	end
+end
+local StaffDetectorV2 = SMX("Blatant",{
+	["Name"] = "StaffDetectorV2",
+	["Function"] = function (callback)
+		if callback then
+			groupcheck(minrank, "Smoke", "A Staff is here! Be careful! [BETA] If you think this is an error contact https://dsc.gg/smokex", 20)
+			plrservice.PlayerAdded:connect(function(plr)
+				groupcheck(minrank)
+			end)
+		end
+	end,
+	["HoverText"] = "If AC Mod don't use their main account they can't get detected."
+})
+StaffDetectorV2.CreateSlider({
+	["Name"] = "Rank check",
+	["Min"] = 0,
+	["Max"] = 255,
+	["Default"] = 55,
+	["Function"] = function(RankCheckFunc)
+		minrank = RankCheckFunc
+	end
+})
+StaffDetectorV2.CreateToggle({
+	["Name"] = "Check Rank",
+	["Function"] = function(checkRankValue)
+		checkrank = checkRankValue
+	end,
+	["Default"] = checkrank
+})
